@@ -5,12 +5,13 @@ function App() {
   const [cart, setCart] = useState([]);
   const [showCart, setShowCart] = useState(false);
 
-  useEffect(() => {
-    fetch("http://localhost:5000/api/items")
-      .then((res) => res.json())
-      .then(setMenuItems)
-      .catch(console.error);
-  }, []);
+useEffect(() => {
+  fetch("https://bakery-cal2.onrender.com/api/items")
+    .then((res) => res.json())
+    .then(setMenuItems)
+    .catch(console.error);
+}, []);
+
 
   const addToCart = (item) => {
     setCart((prev) => {
@@ -170,7 +171,7 @@ function App() {
                   onClick={async () => {
                     const order = { cart, total: totalPrice };
                     try {
-                      const res = await fetch("http://localhost:5000/api/checkout", {
+                      const res = await fetch("https://bakery-cal2.onrender.com/api/checkout", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(order),
@@ -188,7 +189,8 @@ function App() {
                       console.error(err);
                       alert("❌ Network error. Try again.");
                     }
-                  }}
+}}
+
                     className="mt-4 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded"
                   >
                     Proceed to Payment
