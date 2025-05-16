@@ -4,17 +4,19 @@ from pymongo import MongoClient
 from datetime import datetime
 from pymongo.server_api import ServerApi
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
 
 # MongoDB Atlas URI - You should move this to an environment variable later
-MONGO_URI = "mongodb+srv://preetamdivakar:bu6sphE4pv5YwioC@cluster0.nazwmop.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+# MONGO_URI = "mongodb+srv://preetamdivakar:bu6sphE4pv5YwioC@cluster0.nazwmop.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+MONGO_URI = os.environ.get("MONGO_URI", "") + "&tls=true"
 
-# Initialize MongoDB client
-client = MongoClient(MONGO_URI, server_api=ServerApi('1'))
-
+# Initialize MongoDB client with TLS options
 try:
+    client = MongoClient(MONGO_URI, server_api=ServerApi('1'), tls=True, tlsAllowInvalidCertificates=True)
     client.admin.command('ping')
     print("✅ Connected to MongoDB Atlas!")
 except Exception as e:
@@ -25,6 +27,10 @@ db = client["bakery_db"]
 orders_collection = db["orders"]
 
 # === ROUTES ===
+
+@app.route("/")  # Root route to fix Render 404 issue
+def home():
+    return "🍞 Bakery backend is running!"
 
 @app.route("/api/items")
 def get_items():
