@@ -53,7 +53,8 @@ useEffect(() => {
   return (
     <div className="min-h-screen bg-gray-900 text-white font-sans">
       {/* Navbar */}
-      <nav className="bg-gray-800 shadow p-4 flex justify-between items-center">
+
+        <nav className="fixed top-0 left-0 right-0 z-50 bg-gray-800 shadow p-4 flex justify-between items-center">
         <h1 className="text-2xl font-bold text-yellow-400">Sweet Treats 🍰</h1>
         <div>
           <span className="mr-6 text-white hover:text-yellow-400 cursor-pointer">
@@ -69,7 +70,7 @@ useEffect(() => {
       </nav>
 
       {/* Hero */}
-      <header className="text-center mt-10 mb-8">
+      <header className="text-center mt-10 mb-8 pt-20">
         <h2 className="text-4xl font-bold text-yellow-300">
           Delicious Bakes Daily
         </h2>
